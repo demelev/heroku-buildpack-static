@@ -53,6 +53,12 @@ http {
   <% if basic_auth %>
     auth_basic "Restricted";
     auth_basic_user_file <%= basic_auth_htpasswd_path %>;
+
+    <% basic_auth_exclude.each do |ex| %>
+      location /<% ex %> {
+        auth_basic off;
+      }
+    <% end %>
   <% end %>
 
     location / {
